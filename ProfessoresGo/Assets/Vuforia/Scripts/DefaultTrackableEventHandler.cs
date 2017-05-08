@@ -4,6 +4,7 @@ All Rights Reserved.
 Confidential and Proprietary - Protected under copyright and other laws.
 ==============================================================================*/
 
+using System;
 using UnityEngine;
 
 namespace Vuforia
@@ -31,6 +32,8 @@ namespace Vuforia
             {
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
+
+
         }
 
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -67,7 +70,18 @@ namespace Vuforia
 
 
         private void OnTrackingFound()
-        {
+        {            
+            try
+            {
+                AudioSource audioTeste = GetComponent<AudioSource>();
+                audioTeste.Play();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+                Debug.Log(ex.Message);
+            }
+
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
@@ -84,11 +98,46 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+
+            try
+            {
+                if (mTrackableBehaviour.TrackableName == "Imagem1" &&
+                    !GameObject.Find("txt2").GetComponent<MeshRenderer>().enabled &&
+                    !GameObject.Find("ImageTarget2").GetComponent<DefaultTrackableEventHandler>().enabled
+                    )
+                {
+                    GameObject.Find("txt2").GetComponent<MeshRenderer>().enabled = true;
+                    GameObject.Find("ImageTarget2").GetComponent<DefaultTrackableEventHandler>().enabled = true;
+                }
+                if (mTrackableBehaviour.TrackableName == "imagen2" &&
+                    !GameObject.Find("txt3").GetComponent<MeshRenderer>().enabled &&
+                    !GameObject.Find("ImageTarget3").GetComponent<DefaultTrackableEventHandler>().enabled
+                    )
+                {
+                    GameObject.Find("txt3").GetComponent<MeshRenderer>().enabled = true;
+                    GameObject.Find("ImageTarget3").GetComponent<DefaultTrackableEventHandler>().enabled = true;
+                }
+                if (mTrackableBehaviour.TrackableName == "imagen4" &&
+                    !GameObject.Find("txt4").GetComponent<MeshRenderer>().enabled &&
+                    !GameObject.Find("ImageTarget4").GetComponent<DefaultTrackableEventHandler>().enabled
+                    )
+                {
+                    GameObject.Find("txt4").GetComponent<MeshRenderer>().enabled = true;
+                    GameObject.Find("ImageTarget4").GetComponent<DefaultTrackableEventHandler>().enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("erro it2");
+                Debug.Log(ex);
+            }
+
         }
 
 
         private void OnTrackingLost()
         {
+          
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
@@ -105,6 +154,7 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+
         }
 
         #endregion // PRIVATE_METHODS
