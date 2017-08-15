@@ -18,13 +18,10 @@ namespace Vuforia
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
-    
         #endregion // PRIVATE_MEMBER_VARIABLES
 
-
-
         #region UNTIY_MONOBEHAVIOUR_METHODS
-    
+
         void Start()
         {
             mTrackableBehaviour = GetComponent<TrackableBehaviour>();
@@ -41,6 +38,8 @@ namespace Vuforia
             WorkflowHelper.Initialize();
             WorkflowHelper.Camera = GameObject.Find("ARCamera");
             WorkflowHelper.CamButtons = GameObject.Find("camButtons");
+            WorkflowHelper.Timer = GameObject.Find("txtTime");
+            WorkflowHelper.Pistas = GameObject.Find("pPistas");
         }
 
 
