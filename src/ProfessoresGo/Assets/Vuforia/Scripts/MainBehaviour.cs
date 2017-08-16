@@ -12,7 +12,16 @@ public class MainBehaviour : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Debug.Log("Start");
+        WorkflowHelper.Load();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+
+    }
+    private void OnApplicationQuit()
+    {
+        WorkflowHelper.Save();
     }
 
     void Update()

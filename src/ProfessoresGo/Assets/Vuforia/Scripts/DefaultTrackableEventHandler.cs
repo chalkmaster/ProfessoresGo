@@ -16,7 +16,7 @@ namespace Vuforia
                                                 ITrackableEventHandler
     {
         #region PRIVATE_MEMBER_VARIABLES
- 
+
         private TrackableBehaviour mTrackableBehaviour;
         #endregion // PRIVATE_MEMBER_VARIABLES
 
@@ -39,7 +39,10 @@ namespace Vuforia
             WorkflowHelper.Camera = GameObject.Find("ARCamera");
             WorkflowHelper.CamButtons = GameObject.Find("camButtons");
             WorkflowHelper.Timer = GameObject.Find("txtTime");
-            WorkflowHelper.Pistas = GameObject.Find("pPistas");
+            WorkflowHelper.txtPistas = GameObject.Find("txtPista");
+            WorkflowHelper.pPistas = GameObject.Find("pPistas");
+            WorkflowHelper.txtQtd = GameObject.Find("txtQTD");
+            WorkflowHelper.sombra = GameObject.Find("sombra");
         }
 
 
@@ -89,7 +92,8 @@ namespace Vuforia
                 component.enabled = true;
             }
 
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");            
+
         }
 
 
@@ -110,14 +114,14 @@ namespace Vuforia
                 component.enabled = false;
             }
 
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
-
-            if (WorkflowHelper.Camera != null && !WorkflowHelper.ShowCamera)
+            if (mTrackableBehaviour.TrackableName == "10")
             {
-                WorkflowHelper.Camera.SetActive(false);
-                WorkflowHelper.CamButtons.SetActive(false);
+                lock (WorkflowHelper.State)
+                {
+                    WorkflowHelper.ProcessGame(mTrackableBehaviour.TrackableName);
+                }
             }
-
+            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }
 
         #endregion // PRIVATE_METHODS
