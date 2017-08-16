@@ -35,14 +35,7 @@ namespace Vuforia
 
         private void Awake()
         {
-            WorkflowHelper.Initialize();
-            WorkflowHelper.Camera = GameObject.Find("ARCamera");
-            WorkflowHelper.CamButtons = GameObject.Find("camButtons");
-            WorkflowHelper.Timer = GameObject.Find("txtTime");
-            WorkflowHelper.txtPistas = GameObject.Find("txtPista");
-            WorkflowHelper.pPistas = GameObject.Find("pPistas");
-            WorkflowHelper.txtQtd = GameObject.Find("txtQTD");
-            WorkflowHelper.sombra = GameObject.Find("sombra");
+
         }
 
 
@@ -74,7 +67,6 @@ namespace Vuforia
 
         #region PRIVATE_METHODS
 
-
         private void OnTrackingFound()
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
@@ -92,10 +84,13 @@ namespace Vuforia
                 component.enabled = true;
             }
 
+            lock (WorkflowHelper.State)
+            {
+                WorkflowHelper.ProcessGame(mTrackableBehaviour.TrackableName);
+            }
+
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");            
-
         }
-
 
         private void OnTrackingLost()
         {
@@ -114,13 +109,6 @@ namespace Vuforia
                 component.enabled = false;
             }
 
-            if (mTrackableBehaviour.TrackableName == "10")
-            {
-                lock (WorkflowHelper.State)
-                {
-                    WorkflowHelper.ProcessGame(mTrackableBehaviour.TrackableName);
-                }
-            }
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }
 

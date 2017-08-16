@@ -7,7 +7,17 @@ public class MainBehaviour : MonoBehaviour {
 
     private void Awake()
     {
-        Debug.Log("Awake");
+        WorkflowHelper.Initialize();
+        WorkflowHelper.Camera = GameObject.Find("ARCamera");
+        WorkflowHelper.CamButtons = GameObject.Find("camButtons");
+        WorkflowHelper.Timer = GameObject.Find("txtTime");
+        WorkflowHelper.txtPistas = GameObject.Find("txtPista");
+        WorkflowHelper.pPistas = GameObject.Find("pPistas");
+        WorkflowHelper.txtQtd = GameObject.Find("txtQTD");
+        WorkflowHelper.sombra = GameObject.Find("sombra");
+        WorkflowHelper.MainCanvas = GameObject.Find("Canvas");
+
+        WorkflowHelper.CamButtons.SetActive(false);
     }
 
     // Use this for initialization

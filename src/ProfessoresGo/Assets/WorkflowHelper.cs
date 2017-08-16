@@ -23,6 +23,7 @@ namespace Assets
         public static GameObject pPistas;
         internal static GameObject txtQtd;
         internal static GameObject sombra;
+        internal static GameObject MainCanvas;
 
         public static List<string> Read { get; set; }
         public static bool ShowCamera { get; set; }
@@ -67,12 +68,16 @@ namespace Assets
             var json = File.ReadAllText(Application.persistentDataPath + "/state.json");
             State = JsonUtility.FromJson<gState>(json);
             Read = State.read.Split(';').ToList();
-            ComputeFound();
+            Read.ForEach(ProcessGame);
         }
 
         public static void ProcessGame(string found)
         {
             var pista = string.Empty;
+
+            if (!Read.Contains(found))
+                Read.Add(found);
+
             if (State.found < 5)
             {
                 #region case
@@ -94,6 +99,7 @@ namespace Assets
                     case "32":
                         if (!Read.Contains("20"))
                             return;
+                        pista = "Sua proxima psta é: \n\"Democracy is so overrated\"";
                         break;
                     case "41":
                         if (!Read.Contains("31"))
@@ -219,11 +225,13 @@ namespace Assets
                 }
             }
 
-            if (!Read.Contains(found))
-                Read.Add(found);
+            MainCanvas.SetActive(true);
             txtPistas.GetComponent<Text>().text = pista;
             pPistas.SetActive(true);
+            Camera.SetActive(false);
+            CamButtons.SetActive(false);
             ComputeFound();
+            Save();
         }
 
         public static void ComputeFound()
@@ -247,7 +255,7 @@ namespace Assets
                 sombra.SetActive(false);
             }
 
-            txtQtd.GetComponent<Text>().text = "Encontrados: " + State.found + " de 6";
+            ((Text)txtQtd.GetComponents(typeof(Text))[0]).text = "Encontrados: " + State.found + " de 6";
         }
     }
 }
